@@ -1,0 +1,25 @@
+{
+  "iRet": 0,
+  "data":
+    {
+      "Fdeal_id": "2017061921522500100007",
+      "Fmid": "h12057834",
+      "Fuin": null,
+      "Fskuid": "289",
+      "Ftitle": "大礼包 （新会员补拍链接）",
+      "Fmarket_price": "1600",
+      "Fdiscont_price": "1600",
+      "Fbuy_num": "1",
+      "Ftotal_pay": "1600",
+      "Fproc": "广东省",
+      "Fcity": "深圳市",
+      "Fdist": null,
+      "Fdetail": "江苏省无锡市惠山区西漳寺头家园76号2301",
+      "Fconsignee": "任博一",
+      "Fmobile": "15995205507",
+      "Fstate": "1",
+      "Flogistics": "",
+      "Faddtime": "2017-06-19 21:52:25",
+      "Fgoodsurl":"http://st.taxusglobal.com/shopadmin/libs/adminlte/dist/img/user2-160x160.jpg"
+    }
+}

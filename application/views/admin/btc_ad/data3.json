@@ -1,0 +1,21 @@
+{
+  "iRet":0,
+  "sMsg":"",
+  "data":{
+    "id":3,
+    "trade_type":"1",
+    "pay":"1",
+    "price":"16877.87",
+    "amount":"0.01",
+    "start_date":"2017-07-12",
+    "end_date":"2017-09-12",
+    "start_time":"6:00",
+    "end_time":"23:00",
+    "min_price":"100",
+    "max_price":"100000",
+    "remark":"张三，账号12345678@qq.com,请打钱到这个支付宝账号，然后我就放币",
+    "addtime":"2017-01-23 09:23",
+    "username":"张三",
+    "state":"3"
+  }
+}

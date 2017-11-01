@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>login</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
+  <link href="./css/reset.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #0d1a44;
+    }
+
+    .login-wrapper {
+      padding: 50px;
+      background-image: linear-gradient(180deg, #0d1a44 13%, #3c4f91 56%, #5fc1e4);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      border-radius: 200px;
+      transform: translate3d(-50%, -50%, 0);
+      color: #fff;
+    }
+
+    .login-wrapper .title {
+      font-size: 26px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .form-group {
+      width: 300px;
+      margin: 20px auto;
+    }
+
+    .form-group .form-group-input {
+      display: block;
+      width: 100%;
+      height: 40px;
+      padding: 8px 15px;
+      line-height: 24px;
+      font-size: 14px;
+      background-color: #fff;
+      border-radius: 20px;
+      color: #666;
+      outline: none;
+      border: none;
+    }
+
+    .form-group.form-group-code {
+      position: relative;
+      padding-right: 100px;
+    }
+
+    .form-group-code .code {
+      position: absolute;
+      cursor: pointer;
+      display: block;
+      width: 90px;
+      height: 40px;
+      right: 0;
+      top: 0;
+    }
+
+    .form-group .form-group-input.submit {
+      background-color: #fb371b;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 5px 2px;
+      transition: all 300ms;
+    }
+
+    .form-group .form-group-input.submit:hover {
+      background-color: #e26756;
+    }
+
+    .form-group .form-group-input.submit:active {
+      box-shadow: 0 0 0;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <div class="login-wrapper">
+    <h1 class="title"> FBI Login</h1>
+    <div class="form-group">
+      <input type="text" v-model="name" class="form-group-input username" placeholder="username"
+             maxlength="30">
+    </div>
+    <div class="form-group">
+      <input type="password" v-model="password" class="form-group-input password"
+             placeholder="password" maxlength="30">
+    </div>
+    <div class="form-group form-group-code">
+      <input type="password" v-model="img_code" class="form-group-input" placeholder="verification code"
+             maxlength="6">
+      <img class="code" :src="img_code_src" @click="refreshImgCode">
+    </div>
+    <div class="form-group">
+      <input type="button" class="form-group-input submit" value="submit" @click="submit">
+    </div>
+  </div>
+</div>
+
+<script src="./js/vue.min.js"></script>
+<script src="./js/vue-resource.min.js"></script>
+<script src="./js/md5.min.js"></script>
+<script>
+  /* eslint-disable no-new */
+  new Vue({
+    el: '#app',
+    data: function () {
+      return {
+        name: '',
+        password: '',
+        img_code: '',
+        default_src: 'http://trade.test.com/user/get_verify_img',
+        img_code_src: 'http://trade.test.com/user/get_verify_img'
+      }
+    },
+    methods: {
+      submit: function () {
+        var validate = this._checkForm()
+        if (!validate) {
+          return false
+        }
+        var requestdata = {
+          params: {
+            name: this.name,
+            password: md5(this.password),
+            img_code: this.img_code
+          }
+        }
+        var url = 'http://trade.test.com/admin/api/admin_login'
+        this.$http.jsonp(url, requestdata).then((result) => {
+          var res = result.body
+          var iRet = res.iRet
+          if (iRet !== 0) {
+            alert(res.sMsg || this.errorInfo(iRet))
+            this.img_code = ''
+            this.refreshImgCode()
+          }
+        }, (err) => {
+          console.log(err)
+        })
+      },
+      refreshImgCode: function () {
+        this.img_code_src = this.default_src + '?' + Date.now()
+      },
+      _checkForm: function () {
+        var name = this.name
+        var password = this.password
+        var code = this.img_code
+        if (!name) {
+          alert('请输入用户名')
+          return false
+        }
+        if (!password) {
+          alert('请输入登录密码')
+          return false
+        }
+        if (!code) {
+          alert('请输入验证码')
+          return false
+        }
+        return true
+      },
+      errorInfo: function (iRet, info) {
+        if (iRet) {
+          var errObj = {
+            '536936460': '密码校验失败',
+            '536936454': '用户未激活',
+            '536936459': '邮箱不存在',
+            '536975769': '用户未登录',
+            '536936450': '该邮箱已经注册过',
+            '536870912': '参数错误',
+            '536870913': '图片验证码失效',
+            '536870914': '图片验证码校验失败',
+            '536870915': '图片验证码失效',
+            '537198594': '查不到相关信息'
+          }
+          var key = iRet + ''
+          return errObj[key] ? errObj[key] : info || '系统错误，请稍后再试。'
+        } else {
+          return '系统错误，请稍后再试。'
+        }
+      }
+    }
+  })
+
+</script>
+</body>
+</html>

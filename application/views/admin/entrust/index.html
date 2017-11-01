@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>委托管理</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" href="http://st.test.com/xnb_admin/libs/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="http://st.test.com/xnb_admin/libs/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="http://st.test.com/xnb_admin/libs/ionicons-2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="http://st.test.com/xnb_admin/libs/adminlte/dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="http://st.test.com/xnb_admin/libs/adminlte/dist/css/skins/_all-skins.min.css">
+    <!--bootstrap-table-->
+    <link rel="stylesheet" href="http://st.test.com/xnb_admin/libs/bootstrap-table/bootstrap-table.min.css">
+    <!-- 自定义样式 -->
+    <link rel="stylesheet" href="http://st.test.com/xnb_admin/static/css/style.css">
+
+    <!-- if="" lt="" IE="" 9="">
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+</head>
+<body class="hold-transition skin-blue sidebar-mini ">
+<div class="wrapper">
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                委托管理
+                <small>tixianguanli</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+                <li><a href="#"></i> 委托管理</a></li>
+                <li class="active">委托审核列表</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs" id="switch_sel">
+                    <li class="active"><a a href="javascript:;" data-type="3">审核中</a></li>
+                    <li><a href="javascript:;" data-type="1">已通过</a></li>
+                    <li><a a href="javascript:;" data-type="2">未通过</a></li>
+                    <li><a a href="javascript:;" data-type="0">全部</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="navbar-form text-right">
+                        <label>下单时间：</label>
+                        <input type="text" class="form-control" id="ordertimebeg" placeholder="请选择开始日期"> -
+                        <input type="text" class="form-control " id="ordertimeend" placeholder="请选择结束日期">&nbsp;
+                        <select class="form-control" id="coinkind">
+                            <option value="0">请选择币种</option>
+                            <option value="1">BTC</option>
+                            <option value="2">LTC</option>
+                            <option value="3">ETH 4</option>
+                            <option value="4">LSK</option>
+                        </select>
+                        <input type="text" class="form-control" id="ei_user_account" placeholder="请输入会员账号">
+                        <button type="button" class="btn btn-default" id="ei_search">搜索</button>
+                    </div>
+                    <table id="ei_list"></table>
+                </div>
+            </div>
+            <!--详情弹出框-home-->
+            <div class="modal fade" id="entrust_index" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">提现详情</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="box-body">
+                                <table class="table table-bordered">
+                                    <tbody>
+                                    <tr>
+                                        <td>会员</td>
+                                        <td colspan="4" id="ei_account"></td>
+                                        <td>手机号</td>
+                                        <td colspan="4" id="ei_mobile"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>价格</td>
+                                        <td colspan="4" id="ei_price"></td>
+                                        <td>币种</td>
+                                        <td colspan="4" id="ei_kind"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>数量</td>
+                                        <td colspan="4" id="ei_num"></td>
+                                        <td>交易金额</td>
+                                        <td colspan="4" id="ei_trade"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>实际金额</td>
+                                        <td colspan="4" id="ei_real"></td>
+                                        <td>委托日期</td>
+                                        <td colspan="4" id="ei_time"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>状态</td>
+                                        <td colspan="4" id="ei_status"></td>
+                                        <td></td>
+                                        <td colspan="4"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer text-right">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        </div>
+                    </div>
+                </div>
+                <!--弹出框-end-->
+            </div>
+            <!--详情弹出框-end-->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+</div>
+<!-- jQuery 2.2.3 -->
+<script src="http://st.test.com/xnb_admin/libs/adminlte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="http://st.test.com/xnb_admin/libs/bootstrap/js/bootstrap.min.js"></script>
+<!-- AdminLTE App -->
+<script src="http://st.test.com/xnb_admin/libs/adminlte/dist/js/app.min.js"></script>
+<!-- bootstrap table -->
+<script src="http://st.test.com/xnb_admin/libs/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="http://st.test.com/xnb_admin/libs/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
+<!--日期控件-->
+<script src="http://st.test.com/xnb_admin/libs/custom/laydate.dev.js"></script>
+<!-- 页面动态 -->
+<script src="http://st.test.com/xnb_admin/static/js/active/static.js"></script>
+<script src="http://st.test.com/xnb_admin/static/js/active/common.js"></script>
+<script src="http://st.test.com/xnb_admin/static/js/active/check.js"></script>
+<!-- 左侧菜单 -->
+<script src="http://st.test.com/xnb_admin/static/js/common.js"></script>
+<!-- 头部-底部 -->
+<script src="http://st.test.com/xnb_admin/static/js/head-foot.js"></script>
+<!-- 自定义 -->
+<script src="../static/js/active/entrust.js"></script>
+</body>
+</html>
